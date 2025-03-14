@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="as">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অসমীয়া সাহিত্য সংগ্ৰহালয়</title>
+    <style>
+        :root {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --accent-color: #D7CCC8;
+            --text-color: #3E2723;
+            --light-text: #f5f5f5;
+            --highlight: #FF9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FBE9E7;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            text-align: center;
+            padding: 3rem 0;
+            background-image: linear-gradient(rgba(93, 64, 55, 0.8), rgba(93, 64, 55, 0.9)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 5px solid var(--highlight);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            margin: 2rem auto;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--accent-color);
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input:focus {
+            border-color: var(--highlight);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+        }
+
+        .search-button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .search-button:hover {
+            background-color: var(--highlight);
+        }
+
+        .artists-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            position: relative;
+            color: var(--primary-color);
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 70px;
+            height: 3px;
+            background-color: var(--highlight);
+            margin: 0.5rem auto;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .artist-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .artist-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s;
+            filter: grayscale(20%);
+        }
+
+        .artist-card:hover .artist-img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .artist-info {
+            padding: 1.5rem;
+        }
+
+        .artist-info h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+        }
+
+        .artist-info p {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .artist-category {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--highlight);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 1rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--highlight);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--highlight);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .artists-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>অসমীয়া সাহিত্য সংগ্ৰহালয়</h1>
+            <p>অসমৰ সমৃদ্ধ সাহিত্যিক ঐতিহ্য সংৰক্ষণ আৰু উদযাপন</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <div class="logo">অসমীয়া সাহিত্য সংগ্ৰহালয়</div>
+        </nav>
+
+        <section class="hero">
+            <h1>অসমীয়া সাহিত্য সংগ্ৰহালয়লৈ আদৰণি</h1>
+            <p>আমাৰ ব্যাপক ডিজিটেল সংগ্ৰহৰ জৰিয়তে অসমীয়া সাহিত্যৰ সম্পদ আৱিষ্কাৰ কৰক। ক্লাছিক কৰ্মৰ পৰা সমসাময়িক
+                লিখনিলৈকে, প্ৰজন্মৰ বাবে অসমীয়া সাংস্কৃতিক পৰিচয় আকাৰ দিয়া সাহিত্যিক পৰিৱেশ অন্বেষণ কৰক।</p>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="সাহিত্যিক শিল্পী বিচাৰক..." id="search-input">
+                <button class="search-button" id="search-button">বিচাৰক</button>
+            </div>
+        </section>
+
+        <section class="artists-section">
+            <h2 class="section-title">বিশিষ্ট সাহিত্যিক শিল্পী</h2>
+            <div class="artists-grid" id="artists-container">
+                <!-- Artists will be loaded dynamically via JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>আমাৰ বিষয়ে</h3>
+                    <p>অসমীয়া সাহিত্য সংগ্ৰহালয় অসমৰ সমৃদ্ধ সাহিত্যিক ঐতিহ্য সংগ্ৰহ, সংৰক্ষণ আৰু প্ৰচাৰ কৰাৰ বাবে
+                        উৎসৰ্গিত। আমাৰ লক্ষ্য হৈছে অসমীয়া সাহিত্য বিশ্বজুৰি পাঠকৰ বাবে সুলভ কৰা।</p>
+                </div>
+                <div class="footer-section">
+                    <h3>দ্ৰুত লিংক</h3>
+                    <ul>
+                        <li><a href="#">মূল পৃষ্ঠা</a></li>
+                        <li><a href="#">আমাৰ বিষয়ে</a></li>
+                        <li><a href="#">সংগ্ৰহ</a></li>
+                        <li><a href="#">যোগাযোগ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>আমাৰ সৈতে যোগাযোগ কৰক</h3>
+                    <p>ইমেইল: info@assamliterature.org</p>
+                    <p>ফোন: +91-123-456-7890</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© ২০২৫ অসমীয়া সাহিত্য সংগ্ৰহালয়। সৰ্বস্বত্ব সংৰক্ষিত।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+
+        // Function to render artists list
+        function renderArtists(artists) {
+            const artistsContainer = document.getElementById('artists-container');
+            artistsContainer.innerHTML = '';
+
+            if (artists.length === 0) {
+                artistsContainer.innerHTML = `<div class="no-results">কোনো সাহিত্যিক শিল্পী পোৱা নগ'ল। অনুগ্ৰহ কৰি পুনৰ চেষ্টা কৰক।</div>`;
+                return;
+            }
+
+            artists.forEach(artist => {
+                const artistCard = document.createElement('div');
+                artistCard.className = 'artist-card';
+                artistCard.dataset.id = artist.id;
+                artistCard.innerHTML = `
+            <span class="artist-category">${artist.category}</span>
+            <img src="${artist.image}" alt="${artist.name}" class="artist-img">
+            <div class="artist-info">
+                <h3>${artist.name}</h3>
+                <p>${artist.shortDesc}</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #888;">${artist.period}</p>
+            </div>
+        `;
+                artistCard.addEventListener('click', () => {
+                    window.location.href = `artist.html?id=${artist.id}`;
+                });
+                artistsContainer.appendChild(artistCard);
+            });
+        }
+
+        // Function to filter artists based on search query
+        function searchArtists(query, artistsData) {
+            if (!query || query.trim() === '') {
+                return artistsData;
+            }
+
+            query = query.toLowerCase();
+            return artistsData.filter(artist =>
+                artist.name.toLowerCase().includes(query) ||
+                artist.shortDesc.toLowerCase().includes(query) ||
+                artist.category.toLowerCase().includes(query) ||
+                artist.tags.some(tag => tag.toLowerCase().includes(query))
+            );
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Fetch and render all artists
+            try {
+                const response = await fetch('/data/artists.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const artistsData = await response.json();
+                renderArtists(artistsData);
+
+                // Set up search functionality
+                const searchInput = document.getElementById('search-input');
+                const searchButton = document.getElementById('search-button');
+
+                const performSearch = () => {
+                    const filteredArtists = searchArtists(searchInput.value, artistsData);
+                    renderArtists(filteredArtists);
+                };
+
+                searchButton.addEventListener('click', performSearch);
+                searchInput.addEventListener('keypress', (event) => {
+                    if (event.key === 'Enter') performSearch();
+                });
+
+                // Animate cards on load
+                const cards = document.querySelectorAll('.artist-card');
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 300 + index * 100);
+                });
+            } catch (error) {
+                console.error("Error loading artists:", error);
+            }
+        });
+    </script>
+</body>
+
+</html>

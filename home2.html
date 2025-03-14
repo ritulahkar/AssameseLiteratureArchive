@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assamese Songs and Poems Archive</title>
+    <style>
+        :root {
+            --primary: #5c6bc0;
+            --primary-light: #8e99f3;
+            --primary-dark: #26418f;
+            --text-dark: #333;
+            --text-light: #fff;
+            --bg-light: #f5f5f5;
+            --bg-white: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            display: block;
+            font-weight: normal;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .language-toggle {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        
+        .language-toggle button {
+            background-color: var(--bg-white);
+            border: 2px solid var(--primary-dark);
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .language-toggle button.active {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .search-box {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-box button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--text-light);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .artist-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .artist-card {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .artist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .artist-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .artist-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        #songs-page {
+            display: none;
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: var(--text-light);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .alphabet-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1rem;
+        }
+        
+        .alphabet-nav a {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            background-color: var(--primary-light);
+            color: var(--text-light);
+            border-radius: 50%;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .song-list {
+            list-style: none;
+        }
+        
+        .song-item {
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+        
+        .song-item h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .song-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .song-text {
+            white-space: pre-line;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .view-toggle {
+            display: inline-block;
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary);
+            color: var(--text-light);
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .artist-list {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Assamese Songs and Poems Archive <span class="subtitle">অসমীয়া গীত আৰু কবিতাৰ সংগ্ৰহ</span></h1>
+        <div class="language-toggle">
+            <button class="active" data-lang="en">English</button>
+            <button data-lang="as">অসমীয়া</button>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div id="home-page">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="artist-search" placeholder="Search for artists...">
+                    <button id="search-btn">Search</button>
+                </div>
+                <div class="language-content" data-lang="en">
+                    <p>Browse through our collection of renowned Assamese artists and their works.</p>
+                </div>
+                <div class="language-content" data-lang="as" style="display: none;">
+                    <p>আমাৰ সংগ্ৰহত থকা বিখ্যাত অসমীয়া শিল্পী আৰু তেওঁলোকৰ কামসমূহ ব্ৰাউজ কৰক।</p>
+                </div>
+            </div>
+            
+            <div class="artist-list" id="artist-container">
+                <!-- Artist cards will be generated dynamically -->
+            </div>
+        </div>
+        
+        <div id="songs-page">
+            <button class="back-button" id="back-to-home">
+                <span class="language-content" data-lang="en">← Back to Artists</span>
+                <span class="language-content" data-lang="as" style="display: none;">← শিল্পীলৈ উভতি যাওক</span>
+            </button>
+            
+            <div class="language-content" data-lang="en">
+                <h2 id="artist-name">Artist Name</h2>
+                <p id="artist-bio">Artist biography and information.</p>
+            </div>
+            <div class="language-content" data-lang="as" style="display: none;">
+                <h2 id="artist-name-as">শিল্পীৰ নাম</h2>
+                <p id="artist-bio-as">শিল্পীৰ জীৱনী আৰু তথ্য।</p>
+            </div>
+            
+            <div class="alphabet-nav" id="alphabet-nav">
+                <!-- Alphabet navigation generated dynamically -->
+            </div>
+            
+            <ul class="song-list" id="song-list">
+                <!-- Songs will be generated dynamically -->
+            </ul>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="language-content" data-lang="en">
+            <p>© 2025 Assamese Cultural Heritage Project</p>
+        </div>
+        <div class="language-content" data-lang="as" style="display: none;">
+            <p>© ২০২৫ অসমীয়া সাংস্কৃতিক ঐতিহ্য প্ৰকল্প</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data - this would be your static content
+        const artistsData = [
+            {
+                id: 1,
+                name: {
+                    en: "Dr. Bhupen Hazarika",
+                    as: "ড° ভূপেন হাজৰিকা"
+                },
+                bio: {
+                    en: "Dr. Bhupen Hazarika was an Indian playback singer, lyricist, musician, poet and filmmaker from Assam, widely known as Sudhakantha.",
+                    as: "ড° ভূপেন হাজৰিকা আছিল অসমৰ এজন ভাৰতীয় পার্শ্ব গায়ক, গীতিকাৰ, সংগীতজ্ঞ, কবি আৰু চলচ্চিত্ৰ নিৰ্মাতা, যিজন সুধাকণ্ঠ হিচাপে ব্যাপকভাৱে জনাজাত।"
+                },
+                songs: [
+                    {
+                        id: 101,
+                        title: {
+                            en: "Bistirno Parore",
+                            as: "বিস্তীৰ্ণ পাৰৰে"
+                        },
+                        year: 1968,
+                        type: "song",
+                        lyrics: {
+                            en: "Bistirno parore, Asankhya janare\nHahakara sunio...\nNijuke bhavio chiro nisthuro\nAji manavar jonmo mor!",
+                            as: "বিস্তীৰ্ণ পাৰৰে, অসংখ্য জনাৰে\nহাহাকাৰ শুনিও...\nনিজুকে ভাবিও চিৰ নিষ্ঠুৰ\nআজি মানৱৰ জন্ম মোৰ!"
+                        }
+                    },
+                    {
+                        id: 102,
+                        title: {
+                            en: "Dola He Dola",
+                            as: "দ'লা হে দ'লা"
+                        },
+                        year: 1972,
+                        type: "song",
+                        lyrics: {
+                            en: "Dola he dola, dola he dola\nBristi poloke soriso kheti\nSona soriso kheti...",
+                            as: "দ'লা হে দ'লা, দ'লা হে দ'লা\nবৃষ্টি পলকে সৰিষ খেতি\nসোণা সৰিষ খেতি..."
+                        }
+                    },
+                    {
+                        id: 103,
+                        title: {
+                            en: "Aami Ek Jajabor",
+                            as: "আমি এক যাযাবৰ"
+                        },
+                        year: 1975,
+                        type: "song",
+                        lyrics: {
+                            en: "Aami ek jajabor, aami ek jajabor\nDuniyar path thupi thupi...",
+                            as: "আমি এক যাযাবৰ, আমি এক যাযাবৰ\nদুনিয়াৰ পথ থুপি থুপি..."
+                        }
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: {
+                    en: "Jyoti Prasad Agarwala",
+                    as: "জ্যোতি প্ৰসাদ আগৰৱালা"
+                },
+                bio: {
+                    en: "Jyoti Prasad Agarwala was an Assamese playwright, songwriter, poet, writer and film maker. He was considered as Assam's cultural icon.",
+                    as: "জ্যোতি প্ৰসাদ আগৰৱালা আছিল এজন অসমীয়া নাট্যকাৰ, গীতিকাৰ, কবি, লেখক আৰু চলচ্চিত্ৰ নিৰ্মাতা। তেওঁক অসমৰ সাংস্কৃতিক প্ৰতীক হিচাপে গণ্য কৰা হয়।"
+                },
+                songs: [
+                    {
+                        id: 201,
+                        title: {
+                            en: "Luitor Bol Bol",
+                            as: "লুইতৰ বল বল"
+                        },
+                        year: 1935,
+                        type: "song",
+                        lyrics: {
+                            en: "Luitor bol bol, Kopoure dhemal dhemal\nBoroluir pani sokai dile...",
+                            as: "লুইতৰ বল বল, কপৌৰে ঢেমাল ঢেমাল\nবৰলুইৰ পানী চকাই দিলে..."
+                        }
+                    },
+                    {
+                        id: 202,
+                        title: {
+                            en: "Kathanibaru Bihu",
+                            as: "কাথনিবাৰু বিহু"
+                        },
+                        year: 1938,
+                        type: "poem",
+                        lyrics: {
+                            en: "Kathanibaru bihu ahi...\nAlogote uthile jaki...",
+                            as: "কাথনিবাৰু বিহু আহি...\nআলগতে উঠিলে জাকি..."
+                        }
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: {
+                    en: "Anima Choudhury",
+                    as: "অনিমা চৌধুৰী"
+                },
+                bio: {
+                    en: "Anima Choudhury is a renowned Assamese folk singer. She has performed numerous Assamese folk songs throughout her career.",
+                    as: "অনিমা চৌধুৰী এগৰাকী বিখ্যাত অসমীয়া লোক গায়িকা। তেওঁ নিজৰ কেৰিয়াৰত অসংখ্য অসমীয়া লোক গীত পৰিৱেশন কৰিছে।"
+                },
+                songs: [
+                    {
+                        id: 301,
+                        title: {
+                            en: "O Mur Apunar Desh",
+                            as: "ও মোৰ আপোনাৰ দেশ"
+                        },
+                        year: 1972,
+                        type: "song",
+                        lyrics: {
+                            en: "O mur apunar desh\nO mur chirosocha...",
+                            as: "ও মোৰ আপোনাৰ দেশ\nও মোৰ চিৰসোঁচা..."
+                        }
+                    },
+                    {
+                        id: 302,
+                        title: {
+                            en: "Bihu Naam",
+                            as: "বিহু নাম"
+                        },
+                        year: 1975,
+                        type: "song",
+                        lyrics: {
+                            en: "Rongpur bohagote gapun karile...\nGapun karile senehi sot...",
+                            as: "ৰংপুৰ বহাগতে গপুন কৰিলে...\nগপুন কৰিলে চেনেহি চট..."
+                        }
+                    }
+                ]
+            },
+            {
+                id: 4,
+                name: {
+                    en: "Nilmani Phookan",
+                    as: "নীলমণি ফুকন"
+                },
+                bio: {
+                    en: "Nilmani Phookan is an eminent Assamese poet and writer. He is the recipient of the Jnanpith Award, India's highest literary honor.",
+                    as: "নীলমণি ফুকন এজন বিশিষ্ট অসমীয়া কবি আৰু লেখক। তেওঁ ভাৰতৰ সৰ্বোচ্চ সাহিত্যিক সন্মান জ্ঞানপীঠ বঁটা লাভ কৰিছে।"
+                },
+                songs: [
+                    {
+                        id: 401,
+                        title: {
+                            en: "Aranyar Gan",
+                            as: "অৰণ্যৰ গান"
+                        },
+                        year: 1968,
+                        type: "poem",
+                        lyrics: {
+                            en: "Aranyar gan, aranyar gan\nSoi horhori boi jua...",
+                            as: "অৰণ্যৰ গান, অৰণ্যৰ গান\nচৈ হৰহৰি বৈ যোৱা..."
+                        }
+                    },
+                    {
+                        id: 402,
+                        title: {
+                            en: "Golap Aru Belikor",
+                            as: "গোলাপ আৰু বেলিকৰ"
+                        },
+                        year: 1977,
+                        type: "poem",
+                        lyrics: {
+                            en: "Golap aru belikor...\nDukhor katha kot kobo...",
+                            as: "গোলাপ আৰু বেলিকৰ...\nদুখৰ কথা ক'ত ক'বো..."
+                        }
+                    }
+                ]
+            }
+        ];
+
+        // DOM Elements
+        const languageButtons = document.querySelectorAll('.language-toggle button');
+        const languageContents = document.querySelectorAll('.language-content');
+        const artistContainer = document.getElementById('artist-container');
+        const artistSearch = document.getElementById('artist-search');
+        const searchBtn = document.getElementById('search-btn');
+        const homePage = document.getElementById('home-page');
+        const songsPage = document.getElementById('songs-page');
+        const backToHome = document.getElementById('back-to-home');
+        const artistName = document.getElementById('artist-name');
+        const artistNameAs = document.getElementById('artist-name-as');
+        const artistBio = document.getElementById('artist-bio');
+        const artistBioAs = document.getElementById('artist-bio-as');
+        const alphabetNav = document.getElementById('alphabet-nav');
+        const songList = document.getElementById('song-list');
+
+        // Current language and current artist ID
+        let currentLang = 'en';
+        let currentArtistId = null;
+
+        // Language toggle
+        languageButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                languageButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                currentLang = button.getAttribute('data-lang');
+                
+                languageContents.forEach(content => {
+                    if (content.getAttribute('data-lang') === currentLang) {
+                        content.style.display = 'block';
+                    } else {
+                        content.style.display = 'none';
+                    }
+                });
+                
+                // Update content based on current page
+                if (currentArtistId) {
+                    displayArtistSongs(currentArtistId);
+                } else {
+                    renderArtistList(artistsData);
+                }
+            });
+        });
+
+        // Initial render
+        renderArtistList(artistsData);
+
+        // Search functionality
+        searchBtn.addEventListener('click', searchArtists);
+        artistSearch.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                searchArtists();
+            }
+        });
+
+        // Back button
+        backToHome.addEventListener('click', () => {
+            homePage.style.display = 'block';
+            songsPage.style.display = 'none';
+            currentArtistId = null;
+        });
+
+        // Functions
+        function renderArtistList(artists) {
+            artistContainer.innerHTML = '';
+            
+            artists.forEach(artist => {
+                const artistCard = document.createElement('div');
+                artistCard.className = 'artist-card';
+                artistCard.innerHTML = `
+                    <h3>${artist.name[currentLang]}</h3>
+                    <p>${artist.bio[currentLang].substring(0, 100)}...</p>
+                `;
+                
+                artistCard.addEventListener('click', () => {
+                    displayArtistSongs(artist.id);
+                });
+                
+                artistContainer.appendChild(artistCard);
+            });
+        }
+
+        function searchArtists() {
+            const searchTerm = artistSearch.value.toLowerCase();
+            
+            if (searchTerm === '') {
+                renderArtistList(artistsData);
+                return;
+            }
+            
+            const filteredArtists = artistsData.filter(artist => {
+                return artist.name.en.toLowerCase().includes(searchTerm) || 
+                       artist.name.as.toLowerCase().includes(searchTerm);
+            });
+            
+            renderArtistList(filteredArtists);
+        }
+
+        function displayArtistSongs(artistId) {
+            currentArtistId = artistId;
+            
+            // Find artist
+            const artist = artistsData.find(a => a.id === artistId);
+            if (!artist) return;
+            
+            // Update artist info
+            artistName.textContent = artist.name.en;
+            artistNameAs.textContent = artist.name.as;
+            artistBio.textContent = artist.bio.en;
+            artistBioAs.textContent = artist.bio.as;
+            
+            // Show songs page, hide home page
+            homePage.style.display = 'none';
+            songsPage.style.display = 'block';
+            
+            // Generate alphabet navigation
+            generateAlphabetNav(artist.songs);
+            
+            // Render songs
+            renderSongsList(artist.songs);
+        }
+
+        function generateAlphabetNav(songs) {
+            const assameseAlphabet = ['অ', 'আ', 'ই', 'ঈ', 'উ', 'ঊ', 'ঋ', 'এ', 'ঐ', 'ও', 'ঔ', 'ক', 'খ', 'গ', 'ঘ', 'ঙ', 'চ', 'ছ', 'জ', 'ঝ', 'ঞ', 'ট', 'ঠ', 'ড', 'ঢ', 'ণ', 'ত', 'থ', 'দ', 'ধ', 'ন', 'প', 'ফ', 'ব', 'ভ', 'ম', 'য', 'ৰ', 'ল', 'ৱ', 'শ', 'ষ', 'স', 'হ', 'ক্ষ', 'জ্ঞ'];
+            
+            // Get first letters of all songs
+            const usedLetters = songs.map(song => {
+                const title = song.title.as;
+                return title.charAt(0);
+            });
+            
+            // Create unique set of first letters
+            const uniqueLetters = [...new Set(usedLetters)].sort();
+            
+            // Generate alphabet navigation
+            alphabetNav.innerHTML = '';
+            
+            assameseAlphabet.forEach(letter => {
+                if (uniqueLetters.includes(letter)) {
+                    const letterLink = document.createElement('a');
+                    letterLink.href = '#letter-' + letter;
+                    letterLink.textContent = letter;
+                    
+                    alphabetNav.appendChild(letterLink);
+                }
+            });
+        }
+
+        function renderSongsList(songs) {
+            // Sort songs alphabetically by Assamese title
+            const sortedSongs = [...songs].sort((a, b) => {
+                return a.title.as.localeCompare(b.title.as, 'as');
+            });
+            
+            // Group songs by first letter
+            const groupedSongs = {};
+            
+            sortedSongs.forEach(song => {
+                const firstLetter = song.title.as.charAt(0);
+                
+                if (!groupedSongs[firstLetter]) {
+                    groupedSongs[firstLetter] = [];
+                }
+                
+                groupedSongs[firstLetter].push(song);
+            });
+            
+            // Render song list
+            songList.innerHTML = '';
+            
+            Object.keys(groupedSongs).sort().forEach(letter => {
+                const letterHeading = document.createElement('h2');
+                letterHeading.id = 'letter-' + letter;
+                letterHeading.textContent = letter;
+                songList.appendChild(letterHeading);
+                
+                groupedSongs[letter].forEach(song => {
+                    const songItem = document.createElement('li');
+                    songItem.className = 'song-item';
+                    
+                    songItem.innerHTML = `
+                        <h3>${song.title[currentLang]}</h3>
+                        <div class="song-meta">
+                            <span>Year: ${song.year}</span> | 
+                            <span>Type: ${song.type === 'song' ? 
+                                (currentLang === 'en' ? 'Song' : 'গীত') : 
+                                (currentLang === 'en' ? 'Poem' : 'কবিতা')}</span>
+                        </div>
+                        <div class="view-toggle">${currentLang === 'en' ? 'View Lyrics' : 'গীতৰ কথা চাওক'}</div>
+                        <div class="song-text">${song.lyrics[currentLang]}</div>
+                    `;
+                    
+                    // Toggle lyrics visibility
+                    const viewToggle = songItem.querySelector('.view-toggle');
+                    const songText = songItem.querySelector('.song-text');
+                    
+                    viewToggle.addEventListener('click', () => {
+                        if (songText.style.display === 'block') {
+                            songText.style.display = 'none';
+                            viewToggle.textContent = currentLang === 'en' ? 'View Lyrics' : 'গীতৰ কথা চাওক';
+                        } else {
+                            songText.style.display = 'block';
+                            viewToggle.textContent = currentLang === 'en' ? 'Hide Lyrics' : 'গীতৰ কথা লুকুৱাওক';
+                        }
+                    });
+                    
+                    songList.appendChild(songItem);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

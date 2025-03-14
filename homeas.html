@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="as">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অসমীয়া সাহিত্য সংগ্ৰহালয় | Assamese Literature Archive</title>
+    <style>
+        :root {
+            --primary-color: #2d6a4f;
+            --secondary-color: #d8f3dc;
+            --accent-color: #b7e4c7;
+            --text-color: #333;
+            --light-text: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', 'Noto Sans Assamese', sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 1rem 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo-english {
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .search-box {
+            padding: 1rem 0;
+            background-color: var(--secondary-color);
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-form {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+
+        .search-form button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .hero {
+            background-image: url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .browse-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .browse-btn:hover {
+            background-color: #1b4332;
+        }
+
+        .featured-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            display: inline-block;
+            background-color: #f9f9f9;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+            top: 50%;
+            left: 0;
+            z-index: 0;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img {
+            height: 180px;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .card-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .card-link::after {
+            content: "→";
+            margin-left: 5px;
+        }
+
+        .categories {
+            padding: 3rem 0;
+            background-color: var(--secondary-color);
+        }
+
+        .category-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .category-item {
+            background-color: white;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .category-item:hover {
+            transform: scale(1.05);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .recent-updates {
+            padding: 3rem 0;
+        }
+
+        .update-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .latest-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-list {
+            list-style: none;
+        }
+
+        .content-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .content-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-meta {
+            display: flex;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-meta span {
+            margin-right: 1rem;
+        }
+
+        .events-sidebar {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .event-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .event-date {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .contributors {
+            padding: 3rem 0;
+            background-color: #f5f5f5;
+        }
+
+        .contributor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contributor-item {
+            text-align: center;
+        }
+
+        .contributor-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 auto 0.5rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .contributor-name {
+            font-weight: 500;
+        }
+
+        .contributor-role {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .update-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .language-switch {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .language-switch a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div>অসমীয়া সাহিত্য সংগ্ৰহালয়</div>
+                <div class="logo-english">Assamese Literature Archive</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">মূল পৃষ্ঠা</a></li>
+                    <li><a href="#">সংগীত</a></li>
+                    <li><a href="#">কবিতা</a></li>
+                    <li><a href="#">গল্প</a></li>
+                    <li><a href="#">আমাৰ বিষয়ে</a></li>
+                    <li><a href="#">যোগাযোগ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Language Switch -->
+    <div class="language-switch">
+        <a href="#">English</a>
+    </div>
+
+    <!-- Search Box -->
+    <div class="search-box">
+        <div class="container search-container">
+            <form class="search-form">
+                <input type="text" placeholder="গীত, কবিতা, গল্প আদি বিচৰক...">
+                <button type="submit">বিচাৰক</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>অসমীয়া সাহিত্যিক ঐতিহ্য সংৰক্ষণ</h1>
+            <p>অতীত আৰু বৰ্তমানৰ অসমীয়া গীত, কবিতা, গল্প আৰু সাংস্কৃতিক সম্পদৰ বিশাল সংগ্ৰহ অন্বেষণ কৰক।</p>
+            <a href="#" class="browse-btn">অন্বেষণ আৰম্ভ কৰক</a>
+        </div>
+    </section>
+
+    <!-- Featured Content Section -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>বিশিষ্ট ক্লাছিক</h2>
+            </div>
+            <div class="card-grid">
+                <!-- Card 1 -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/300/180')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">ভূপেন হাজৰিকাৰ গীত</h3>
+                        <p class="card-text">ডঃ ভূপেন হাজৰিকাৰ বিখ্যাত লোকগীতসমূহৰ গীতিধাৰা আৰু ঐতিহাসিক প্ৰেক্ষাপটৰ
+                            সৈতে শুনক।</p>
+                        <a href="#" class="card-link">অন্বেষণ কৰক</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/300/180')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">দ্বিজেন্দ্ৰ মহন্তৰ কবিতা</h3>
+                        <p class="card-text">টীকা আৰু ব্যাখ্যাৰ সৈতে দ্বিজেন্দ্ৰ মহন্তৰ কাব্যিক প্ৰতিভা আৱিষ্কাৰ কৰক।
+                        </p>
+                        <a href="#" class="card-link">আৰু পঢ়ক</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/300/180')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">জ্যোতিপ্ৰসাদ আগৰৱালাৰ ৰচনা</h3>
+                        <p class="card-text">বিখ্যাত অসমীয়া কবি আৰু লেখক জ্যোতিপ্ৰসাদ আগৰৱালাৰ সাহিত্যিক কৃতিসমূহ
+                            অন্বেষণ কৰক।</p>
+                        <a href="#" class="card-link">আৱিষ্কাৰ কৰক</a>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/300/180')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">ফণিধৰ ৰায়ৰ সংকলন</h3>
+                        <p class="card-text">ফণিধৰ ৰায়ৰ দ্বাৰা ৰচিত ক্লাছিক গল্প আৰু বৰ্ণনাৰ সংকলনত নিমজ্জিত হওক।</p>
+                        <a href="#" class="card-link">সংকলন চাওক</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>শ্ৰেণী অনুসৰি অন্বেষণ কৰক</h2>
+            </div>
+            <div class="category-container">
+                <div class="category-item">
+                    <div class="category-icon">🎵</div>
+                    <h3>গীত</h3>
+                    <p>গীতিধাৰাৰ সৈতে ক্লাছিক আৰু আধুনিক অসমীয়া সংগীত</p>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-icon">📜</div>
+                    <h3>কবিতা</h3>
+                    <p>বিখ্যাত আৰু উদীয়মান কবিসকলৰ কাব্য</p>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-icon">📚</div>
+                    <h3>গল্প</h3>
+                    <p>চুটিগল্প আৰু লোককথা</p>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-icon">🎭</div>
+                    <h3>নাটক</h3>
+                    <p>নাট্য কৃতি আৰু সংলাপ</p>
+                </div>
+
+                <div class="category-item">
+                    <div class="category-icon">🎨</div>
+                    <h3>শিল্প আৰু সংস্কৃতি</h3>
+                    <p>দৃশ্য কলা আৰু সাংস্কৃতিক সম্পদ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Updates Section -->
+    <section class="recent-updates">
+        <div class="container">
+            <div class="section-title">
+                <h2>শেহতীয়া আপডেইট</h2>
+            </div>
+            <div class="update-grid">
+                <div class="latest-content">
+                    <h3>শেহতীয়া সংযোজন</h3>
+                    <ul class="content-list">
+                        <li class="content-item">
+                            <div class="content-meta">
+                                <span>গীত</span>
+                                <span>যোগ কৰা: ১০ মাৰ্চ, ২০২৫</span>
+                            </div>
+                            <h4>জুৰণিৰ গীত - ব্ৰজেন্দ্ৰ প্ৰসাদ</h4>
+                            <p>বাদ্যযন্ত্ৰৰ সংগত সহ ব্ৰজেন্দ্ৰ প্ৰসাদৰ দ্বাৰা পৰিৱেশিত পৰম্পৰাগত জুৰণিৰ গীতৰ
+                                প্ৰশান্তিদায়ক সংকলন।</p>
+                        </li>
+
+                        <li class="content-item">
+                            <div class="content-meta">
+                                <span>কবিতা</span>
+                                <span>যোগ কৰা: ৫ মাৰ্চ, ২০২৫</span>
+                            </div>
+                            <h4>নীলমণিৰ কবিতাৱলী - সমীৰণ বৰুৱা</h4>
+                            <p>প্ৰকৃতি আৰু পৰিচয়ৰ বিষয়বস্তু অন্বেষণ কৰা সমীৰণ বৰুৱাৰ আধুনিক অসমীয়া কবিতাৰ সংকলন।</p>
+                        </li>
+
+                        <li class="content-item">
+                            <div class="content-meta">
+                                <span>গল্প</span>
+                                <span>যোগ কৰা: ২৮ ফেব্ৰুৱাৰী, ২০২৫</span>
+                            </div>
+                            <h4>মই আৰু মোৰ গাঁও - অনুপম শইকীয়া</h4>
+                            <p>অনুপম শইকীয়াৰ দ্বাৰা ৰচিত গ্ৰাম্য জীৱন আৰু শৈশৱৰ স্মৃতিৰ বিষয়ে নষ্টালজিক চুটিগল্প
+                                সংকলন।</p>
+                        </li>
+
+                        <li class="content-item">
+                            <div class="content-meta">
+                                <span>অডিঅ'</span>
+                                <span>যোগ কৰা: ২৫ ফেব্ৰুৱাৰী, ২০২৫</span>
+                            </div>
+                            <h4>বিহুৰ গীত সংকলন - পাৰ্থজ্যোতি দত্ত</h4>
+                            <p>পাৰ্থজ্যোতি দত্তৰ দ্বাৰা পৰিৱেশিত পৰম্পৰাগত বিহু গীতৰ নতুনকৈ ৰিমাষ্টাৰ্ড ৰেকৰ্ডিং।</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="events-sidebar">
+                    <h3>আসন্ন অনুষ্ঠান</h3>
+                    <div class="event-item">
+                        <div class="event-date">২০ মাৰ্চ, ২০২৫</div>
+                        <h4>অসমীয়া সাহিত্য কৰ্মশালা</h4>
+                        <p>পৰম্পৰাগত অসমীয়া সাহিত্যিক ৰূপ আৰু সেইবোৰৰ আধুনিক অভিযোজনৰ ওপৰত ভাৰ্চুৱেল কৰ্মশালা।</p>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date">৭-৮ এপ্ৰিল, ২০২৫</div>
+                        <h4>বিহু ডিজিটেল উৎসৱ</h4>
+                        <p>পৰিৱেশন আৰু পঠনৰ সৈতে বহাগ বিহুৰ অনলাইন উদযাপন।</p>
+                    </div>
+
+                    <div class="event-item">
+                        <div class="event-date">১৫ এপ্ৰিল, ২০২৫</div>
+                        <h4>কবিতা পঠন অধিৱেশন</h4>
+                        <p>সমসাময়িক অসমীয়া কবিতা পঠন আৰু আলোচনাৰ লাইভ ষ্ট্ৰীমিং।</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contributors Section -->
+    <section class="contributors">
+        <div class="container">
+            <div class="section-title">
+                <h2>উল্লেখযোগ্য অৱদানকাৰী</h2>
+            </div>
+            <p class="text-center">আমাৰ সংগ্ৰহালয় পণ্ডিত, শিল্পী আৰু স্বেচ্ছাসেৱকসকলৰ নিবেদিত কামৰ বাবে সম্ভৱ হৈছে।</p>
+            <div class="contributor-grid">
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">ডঃ প্ৰিয়ংকা গগৈ</div>
+                    <div class="contributor-role">সাহিত্যিক ইতিহাসবিদ</div>
+                </div>
+
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">হিমাংশু বৰা</div>
+                    <div class="contributor-role">অডিও ইঞ্জিনিয়াৰ</div>
+                </div>
+
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">মানসী বৰুৱা</div>
+                    <div class="contributor-role">অনুবাদক</div>
+                </div>
+
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">ডঃ শান্তনু কলিতা</div>
+                    <div class="contributor-role">সাংস্কৃতিক গৱেষক</div>
+                </div>
+
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">নয়নজ্যোতি শৰ্মা</div>
+                    <div class="contributor-role">ডিজিটাল আৰ্কাইভিষ্ট</div>
+                </div>
+
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">অংকিতা দাস</div>
+                    <div class="contributor-role">ৱেব ডেভেলপাৰ</div>
+                </div>
+
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">প্ৰণৱ তালুকদাৰ</div>
+                    <div class="contributor-role">সংগীতজ্ঞ</div>
+                </div>
+
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">জয়শ্ৰী বেজবৰুৱা</div>
+                    <div class="contributor-role">পুথিভঁৰাল বিশেষজ্ঞ</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>যোগাযোগ</h3>
+                    <p>অসমীয়া সাহিত্য সংগ্ৰহালয়</p>
+                    <p>ডিজিটেল সংৰক্ষণ কেন্দ্ৰ</p>
+                    <p>ডিব্ৰুগড়, অসম, ভাৰত</p>
+                    <p>ইমেইল: info@assamlitarchive.org</p>
+                    <p>ফোন: +91 373 2345678</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>দ্ৰুত লিংক</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">মূল পৃষ্ঠা</a></li>
+                        <li><a href="#">সাম্প্ৰতিক সংযোজন</a></li>
+                        <li><a href="#">জনপ্ৰিয় সংগ্ৰহ</a></li>
+                        <li><a href="#">অনুসন্ধান কৰক</a></li>
+                        <li><a href="#">শ্ৰেণী</a></li>
+                        <li><a href="#">আমাৰ বিষয়ে</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>সম্পদ</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">গৱেষণা কিট</a></li>
+                        <li><a href="#">শিক্ষামূলক সামগ্ৰী</a></li>
+                        <li><a href="#">অভিলেখাগাৰৰ নীতি</a></li>
+                        <li><a href="#">উদ্ধৃতি মাৰ্গদৰ্শিকা</a></li>
+                        <li><a href="#">বিশেষজ্ঞৰ সৈতে যোগাযোগ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>আমাৰ সৈতে যুক্ত হওক</h3>
+                    <p>নৱীনতম সংযোজন, অনুষ্ঠান আৰু আপডেইটৰ বাবে আমাৰ নিউজলেটাৰ সাবস্ক্ৰাইব কৰক।</p>
+                    <form>
+                        <input type="email" placeholder="আপোনাৰ ইমেইল ঠিকনা"
+                            style="width: 100%; padding: 0.8rem; margin-top: 1rem; border-radius: 4px; border: none;">
+                        <button type="submit"
+                            style="width: 100%; padding: 0.8rem; margin-top: 0.5rem; background-color: var(--accent-color); color: var(--primary-color); border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">সাবস্ক্ৰাইব</button>
+                    </form>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">F</a>
+                        <a href="#" class="social-icon">T</a>
+                        <a href="#" class="social-icon">I</a>
+                        <a href="#" class="social-icon">Y</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; ২০২৫ অসমীয়া সাহিত্য সংগ্ৰহালয়। সৰ্বসত্ব সংৰক্ষিত।</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

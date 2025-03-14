@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="as">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কলাকাৰৰ বিৱৰণ - অসমীয়া সাহিত্য সংগ্ৰহালয়</title>
+    <style>
+        :root {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --accent-color: #D7CCC8;
+            --text-color: #3E2723;
+            --light-text: #f5f5f5;
+            --highlight: #FF9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FBE9E7;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            text-align: center;
+            padding: 2rem 0;
+            background-image: linear-gradient(rgba(93, 64, 55, 0.8), rgba(93, 64, 55, 0.9)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 5px solid var(--highlight);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight);
+        }
+
+        .artist-profile {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .artist-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .artist-image img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+            transition: transform 0.5s;
+        }
+
+        .artist-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .artist-info {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .artist-name {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .artist-period {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .artist-category {
+            display: inline-block;
+            background-color: var(--highlight);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .artist-bio {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background-color: var(--highlight);
+        }
+
+        .alphabet-filter {
+            margin: 2rem 0;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .alphabet-letters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .alphabet-letter {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .alphabet-letter:hover {
+            background-color: var(--highlight);
+            color: white;
+        }
+
+        .alphabet-letter.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .works-list {
+            margin-top: 2rem;
+        }
+
+        .work-item {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .work-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .work-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .work-year {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .work-type {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .work-description {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loader::after {
+            content: "";
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--accent-color);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .no-works {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #666;
+            background-color: white;
+            border-radius: 8px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 1rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--highlight);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--highlight);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .artist-profile {
+                flex-direction: column;
+            }
+
+            .artist-image {
+                max-width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .artist-name {
+                font-size: 2rem;
+            }
+
+            .alphabet-letter {
+                width: 35px;
+                height: 35px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>অসমীয়া সাহিত্য সংগ্ৰহালয়</h1>
+            <p>অসমৰ সমৃদ্ধ সাহিত্যিক ঐতিহ্য সংৰক্ষণ আৰু উদযাপন</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <div class="logo"><a href="index.html">অসমীয়া সাহিত্য সংগ্ৰহালয়</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">মূল পৃষ্ঠা</a></li>
+                <li><a href="#">সংগ্ৰহ</a></li>
+                <li><a href="#">আমাৰ বিষয়ে</a></li>
+                <li><a href="#">যোগাযোগ</a></li>
+            </ul>
+        </nav>
+
+        <div id="artist-container">
+            <!-- Artist profile will be loaded here -->
+            <div class="loader" id="profile-loader"></div>
+        </div>
+
+        <div class="alphabet-filter">
+            <h3 class="section-title">কৰ্ম অন্বেষণ কৰক</h3>
+            <p>অসমীয়া বৰ্ণমালাৰ অক্ষৰ অনুসৰি ফিল্টাৰ কৰক:</p>
+            <div class="alphabet-letters" id="alphabet-container">
+                <!-- Alphabet letters will be loaded here -->
+            </div>
+        </div>
+
+        <div id="works-container">
+            <!-- Works will be loaded here -->
+            <div class="loader" id="works-loader"></div>
+        </div>
+
+        <a href="#" class="back-to-top" id="back-to-top">↑</a>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>আমাৰ বিষয়ে</h3>
+                    <p>অসমীয়া সাহিত্য সংগ্ৰহালয় অসমৰ সমৃদ্ধ সাহিত্যিক ঐতিহ্য সংগ্ৰহ, সংৰক্ষণ আৰু প্ৰচাৰ কৰাৰ বাবে
+                        উৎসৰ্গিত। আমাৰ লক্ষ্য হৈছে অসমীয়া সাহিত্য বিশ্বজুৰি পাঠকৰ বাবে সুলভ কৰা।</p>
+                </div>
+                <div class="footer-section">
+                    <h3>দ্ৰুত লিংক</h3>
+                    <ul>
+                        <li><a href="index.html">মূল পৃষ্ঠা</a></li>
+                        <li><a href="#">আমাৰ বিষয়ে</a></li>
+                        <li><a href="#">সংগ্ৰহ</a></li>
+                        <li><a href="#">যোগাযোগ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>আমাৰ সৈতে যোগাযোগ কৰক</h3>
+                    <p>ইমেইল: info@assamliterature.org</p>
+                    <p>ফোন: +91-123-456-7890</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© ২০২৫ অসমীয়া সাহিত্য সংগ্ৰহালয়। সৰ্বস্বত্ব সংৰক্ষিত।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Helper function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Assamese alphabet array
+        const assameseAlphabet = [
+            'অ', 'আ', 'ই', 'ঈ', 'উ', 'ঊ', 'ঋ', 'এ', 'ঐ', 'ও', 'ঔ',
+            'ক', 'খ', 'গ', 'ঘ', 'ঙ', 'চ', 'ছ', 'জ', 'ঝ', 'ঞ',
+            'ট', 'ঠ', 'ড', 'ঢ', 'ণ', 'ত', 'থ', 'দ', 'ধ', 'ন',
+            'প', 'ফ', 'ব', 'ভ', 'ম', 'য', 'ৰ', 'ল', 'ৱ', 'শ', 'ষ', 'স', 'হ', 'ক্ষ', 'ড়', 'ঢ়', 'য়', 'ৎ'
+        ];
+
+        // Function to simulate loading data from backend
+        // Function to load artist data from JSON file
+        function fetchArtistData(id) {
+            // Show loader
+            const profileLoader = document.getElementById('profile-loader');
+            if (profileLoader) {
+                profileLoader.style.display = 'block';
+            }
+
+            // Build the path to the JSON file based on the artist ID
+            const filePath = `data/${id}_a/about.json`;
+
+            // Fetch the JSON file
+            return fetch(filePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .finally(() => {
+                    // Hide loader regardless of success or failure
+                    if (profileLoader) {
+                        profileLoader.style.display = 'none';
+                    }
+                });
+        }
+
+        // Function to fetch works based on letter
+        function fetchWorksByLetter(artistId, letter) {
+            // Show loader
+            const worksLoader = document.getElementById('works-loader');
+            if (worksLoader) {
+                worksLoader.style.display = 'block';
+            }
+
+            // Build the path to the JSON file based on the artist ID
+            const filePath = `data/${artistId}_a/works.json`;
+
+            // Fetch the JSON file
+            return fetch(filePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(worksData => {
+                    // Group works by the first letter of their title
+                    const worksByLetter = {};
+
+                    worksData.forEach(work => {
+                        // Get the first character of the title
+                        const firstChar = work.title.charAt(0);
+
+                        // If this letter doesn't exist in our grouped data yet, create an array
+                        if (!worksByLetter[firstChar]) {
+                            worksByLetter[firstChar] = [];
+                        }
+
+                        // Add the work to the appropriate letter group
+                        worksByLetter[firstChar].push(work);
+                    });
+
+                    // Return works for the selected letter or empty array if none found
+                    return worksByLetter[letter] || [];
+                })
+                .finally(() => {
+                    // Hide loader regardless of success or failure
+                    if (worksLoader) {
+                        worksLoader.style.display = 'none';
+                    }
+                });
+        }
+
+        // Function to render artist profile
+        function renderArtistProfile(artist) {
+            const artistContainer = document.getElementById('artist-container');
+            if (!artistContainer) return;
+
+            artistContainer.innerHTML = `
+        <div class="artist-profile">
+            <div class="artist-image">
+                <img src="${artist.image}" alt="${artist.name}">
+            </div>
+            <div class="artist-info">
+                <h1 class="artist-name">${artist.name}</h1>
+                <div class="artist-period">${artist.period}</div>
+                <div class="artist-category">${artist.category}</div>
+                <div class="artist-bio">${artist.bio}</div>
+                <div class="artist-tags">
+                    <h3 class="section-title">বিশেষ দিশসমূহ</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+                        ${artist.tags.map(tag => `<span class="work-type">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+        }
+
+        // Function to render alphabet filter
+        function renderAlphabetFilter() {
+            const alphabetContainer = document.getElementById('alphabet-container');
+            if (!alphabetContainer) return;
+
+            alphabetContainer.innerHTML = '';
+
+            assameseAlphabet.forEach(letter => {
+                const letterElement = document.createElement('div');
+                letterElement.className = 'alphabet-letter';
+                letterElement.textContent = letter;
+                letterElement.addEventListener('click', () => {
+                    // Remove active class from all letters
+                    document.querySelectorAll('.alphabet-letter').forEach(el => {
+                        el.classList.remove('active');
+                    });
+
+                    // Add active class to clicked letter
+                    letterElement.classList.add('active');
+
+                    // Load works for the selected letter
+                    const artistId = getUrlParameter('id');
+                    loadWorksByLetter(artistId, letter);
+                });
+
+                alphabetContainer.appendChild(letterElement);
+            });
+        }
+
+        // Function to render works list
+        function renderWorks(works) {
+            const worksContainer = document.getElementById('works-container');
+            if (!worksContainer) return;
+
+            worksContainer.innerHTML = '';
+
+            if (works.length === 0) {
+                worksContainer.innerHTML = `
+            <div class="no-works">
+                এই অক্ষৰেৰে আৰম্ভ হোৱা কোনো কৰ্ম পোৱা নগ'ল।
+                অন্য অক্ষৰ চেষ্টা কৰক।
+            </div>
+        `;
+                return;
+            }
+
+            const worksList = document.createElement('div');
+            worksList.className = 'works-list';
+
+            works.forEach(work => {
+                const workItem = document.createElement('div');
+                workItem.className = 'work-item';
+                workItem.dataset.id = work.id;
+
+                workItem.innerHTML = `
+            <h3 class="work-title">${work.title}</h3>
+            <div class="work-year">${work.year}</div>
+            <span class="work-type">${work.type}</span>
+            <div class="work-description">${work.description}</div>
+        `;
+
+                // Add click event to navigate to work's detail page
+                workItem.addEventListener('click', () => {
+                    window.location.href = `work.html?wid=${work.id}&aid=${work.artistId}`;
+                });
+
+                worksList.appendChild(workItem);
+            });
+
+            worksContainer.appendChild(worksList);
+        }
+
+        // Function to load works by letter
+        async function loadWorksByLetter(artistId, letter) {
+            try {
+                const works = await fetchWorksByLetter(artistId, letter);
+                renderWorks(works);
+            } catch (error) {
+                console.error('Error loading works:', error);
+                const worksContainer = document.getElementById('works-container');
+                if (worksContainer) {
+                    worksContainer.innerHTML = `
+                <div class="no-works">
+                    কৰ্মসমূহ লোড কৰিবলৈ অক্ষম। অনুগ্ৰহ কৰি পুনৰ চেষ্টা কৰক।
+                </div>
+            `;
+                }
+            }
+        }
+
+        // Function to initialize the page
+        async function initPage() {
+            const artistId = getUrlParameter('id');
+
+            // If no artist ID is provided, redirect to home page
+            if (!artistId) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                // Load artist data
+                const artist = await fetchArtistData(artistId);
+                renderArtistProfile(artist);
+
+                // Render alphabet filter
+                renderAlphabetFilter();
+
+                // Load works for the first letter (অ) by default
+                const defaultLetter = 'অ';
+                const firstLetterElement = document.querySelector('.alphabet-letter');
+                if (firstLetterElement) {
+                    firstLetterElement.classList.add('active');
+                }
+                loadWorksByLetter(artistId, defaultLetter);
+
+                // Set page title
+                document.title = `${artist.name} - অসমীয়া সাহিত্য সংগ্ৰহালয়`;
+
+            } catch (error) {
+                console.error('Error initializing page:', error);
+                const artistContainer = document.getElementById('artist-container');
+                if (artistContainer) {
+                    artistContainer.innerHTML = `
+                <div class="no-works" style="margin-top: 2rem;">
+                    কলাকাৰৰ তথ্য লোড কৰিবলৈ অক্ষম। অনুগ্ৰহ কৰি পুনৰ চেষ্টা কৰক।
+                </div>
+            `;
+                }
+            }
+        }
+
+        // Set up back to top button
+        function setupBackToTop() {
+            const backToTopButton = document.getElementById('back-to-top');
+            if (!backToTopButton) return;
+
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initPage();
+            setupBackToTop();
+        });
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অসমীয়া সাহিত্য সংগ্ৰহালয় | Assamese Literature Archive</title>
+    <style>
+        :root {
+            --primary-color: #2d6a4f;
+            --secondary-color: #d8f3dc;
+            --accent-color: #b7e4c7;
+            --text-color: #333;
+            --light-text: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', 'Noto Sans Assamese', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 1rem 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo-assamese {
+            font-size: 1.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .search-box {
+            padding: 1rem 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .search-form {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+        }
+        
+        .search-form input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-form button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .hero {
+            background-image: url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .browse-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .browse-btn:hover {
+            background-color: #1b4332;
+        }
+        
+        .featured-section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            display: inline-block;
+            background-color: #f9f9f9;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+            top: 50%;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-img {
+            height: 180px;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-text {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .card-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .card-link::after {
+            content: "→";
+            margin-left: 5px;
+        }
+        
+        .categories {
+            padding: 3rem 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .category-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .category-item {
+            background-color: white;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .category-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .recent-updates {
+            padding: 3rem 0;
+        }
+        
+        .update-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .latest-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-list {
+            list-style: none;
+        }
+        
+        .content-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .content-item:last-child {
+            border-bottom: none;
+        }
+        
+        .content-meta {
+            display: flex;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content-meta span {
+            margin-right: 1rem;
+        }
+        
+        .events-sidebar {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .event-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .event-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .event-date {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contributors {
+            padding: 3rem 0;
+            background-color: #f5f5f5;
+        }
+        
+        .contributor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .contributor-item {
+            text-align: center;
+        }
+        
+        .contributor-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 auto 0.5rem;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .contributor-name {
+            font-weight: 500;
+        }
+        
+        .contributor-role {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .update-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-english">Assamese Literature Archive</span>
+                <div class="logo-assamese">অসমীয়া সাহিত্য সংগ্ৰহালয়</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Music</a></li>
+                    <li><a href="#">Poetry</a></li>
+                    <li><a href="#">Stories</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Search Box -->
+    <div class="search-box">
+        <div class="container search-container">
+            <form class="search-form">
+                <input type="text" placeholder="Search for songs, poems, stories and more...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Preserving Assamese Literary Heritage</h1>
+            <p>Explore a rich collection of Assamese songs, poems, stories, and cultural treasures from past and present.</p>
+            <a href="#" class="browse-btn">Start Exploring</a>
+        </div>
+    </section>
+    
+    <!-- Featured Content Section -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Classics</h2>
+            </div>
+            <div class="card-grid">
+                <!-- Card 1 -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/300/180')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">ভূপেন হাজৰিকাৰ গীত</h3>
+                        <p class="card-text">Listen to the legendary folk songs of Dr. Bhupen Hazarika with lyrics and historical context.</p>
+                        <a href="#" class="card-link">Explore</a>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/300/180')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">দ্বিজেন্দ্ৰ মহন্তৰ কবিতা</h3>
+                        <p class="card-text">Discover the poetic brilliance of Dwijen Mahanta with annotations and explanations.</p>
+                        <a href="#" class="card-link">Read More</a>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/300/180')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">জ্যোতিপ্ৰসাদ আগৰৱালাৰ ৰচনা</h3>
+                        <p class="card-text">Explore the literary works of the renowned Assamese poet and writer Jyoti Prasad Agarwala.</p>
+                        <a href="#" class="card-link">Discover</a>
+                    </div>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/300/180')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">ফণিধৰ ৰায়ৰ সংকলন</h3>
+                        <p class="card-text">Dive into the collection of classic stories and narratives by Phanidhara Ray.</p>
+                        <a href="#" class="card-link">View Collection</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore By Category</h2>
+            </div>
+            <div class="category-container">
+                <div class="category-item">
+                    <div class="category-icon">🎵</div>
+                    <h3>Songs</h3>
+                    <p>Classic and modern Assamese music with lyrics</p>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-icon">📜</div>
+                    <h3>Poetry</h3>
+                    <p>Verses from renowned and emerging poets</p>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-icon">📚</div>
+                    <h3>Stories</h3>
+                    <p>Short stories and folk tales</p>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-icon">🎭</div>
+                    <h3>Drama</h3>
+                    <p>Theatrical works and dialogues</p>
+                </div>
+                
+                <div class="category-item">
+                    <div class="category-icon">🎨</div>
+                    <h3>Art & Culture</h3>
+                    <p>Visual arts and cultural resources</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Recent Updates Section -->
+    <section class="recent-updates">
+        <div class="container">
+            <div class="section-title">
+                <h2>Recent Updates</h2>
+            </div>
+            <div class="update-grid">
+                <div class="latest-content">
+                    <h3>Latest Additions</h3>
+                    <ul class="content-list">
+                        <li class="content-item">
+                            <div class="content-meta">
+                                <span>Song</span>
+                                <span>Added: Mar 10, 2025</span>
+                            </div>
+                            <h4>জুৰণিৰ গীত - ব্ৰজেন্দ্ৰ প্ৰসাদ</h4>
+                            <p>A soothing collection of traditional lullabies performed by Brajendra Prasad with instrumental accompaniment.</p>
+                        </li>
+                        
+                        <li class="content-item">
+                            <div class="content-meta">
+                                <span>Poetry</span>
+                                <span>Added: Mar 5, 2025</span>
+                            </div>
+                            <h4>নীলমণিৰ কবিতাৱলী - সমীৰণ বৰুৱা</h4>
+                            <p>A compilation of modern Assamese poetry by Samiran Baruah exploring themes of nature and identity.</p>
+                        </li>
+                        
+                        <li class="content-item">
+                            <div class="content-meta">
+                                <span>Story</span>
+                                <span>Added: Feb 28, 2025</span>
+                            </div>
+                            <h4>মই আৰু মোৰ গাঁও - অনুপম শইকীয়া</h4>
+                            <p>A nostalgic short story collection by Anupam Xoikia about rural life and childhood memories.</p>
+                        </li>
+                        
+                        <li class="content-item">
+                            <div class="content-meta">
+                                <span>Audio</span>
+                                <span>Added: Feb 25, 2025</span>
+                            </div>
+                            <h4>বিহুৰ গীত সংকলন - পাৰ্থজ্যোতি দত্ত</h4>
+                            <p>Newly remastered recordings of traditional Bihu songs performed by Parthajyoti Dutta.</p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="events-sidebar">
+                    <h3>Upcoming Events</h3>
+                    <div class="event-item">
+                        <div class="event-date">March 20, 2025</div>
+                        <h4>Assamese Literature Workshop</h4>
+                        <p>Virtual workshop on traditional Assamese literary forms and their modern adaptations.</p>
+                    </div>
+                    
+                    <div class="event-item">
+                        <div class="event-date">April 7-8, 2025</div>
+                        <h4>Bihu Digital Festival</h4>
+                        <p>Online celebration of Bohag Bihu with performances and readings.</p>
+                    </div>
+                    
+                    <div class="event-item">
+                        <div class="event-date">April 15, 2025</div>
+                        <h4>Poetry Reading Session</h4>
+                        <p>Live streaming of contemporary Assamese poetry reading and discussion.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contributors Section -->
+    <section class="contributors">
+        <div class="container">
+            <div class="section-title">
+                <h2>Notable Contributors</h2>
+            </div>
+            <p class="text-center">Our archive is made possible by the dedicated work of scholars, artists, and volunteers.</p>
+            <div class="contributor-grid">
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">Dr. Priyanka Gogoi</div>
+                    <div class="contributor-role">Literary Historian</div>
+                </div>
+                
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">Himangshu Borah</div>
+                    <div class="contributor-role">Audio Engineer</div>
+                </div>
+                
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">Manashi Baruah</div>
+                    <div class="contributor-role">Translator</div>
+                </div>
+                
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">Dr. Santanu Kalita</div>
+                    <div class="contributor-role">Cultural Researcher</div>
+                </div>
+                
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">Nandita Deka</div>
+                    <div class="contributor-role">Folk Song Expert</div>
+                </div>
+                
+                <div class="contributor-item">
+                    <div class="contributor-img" style="background-image: url('/api/placeholder/100/100')"></div>
+                    <div class="contributor-name">Bijoy Sharma</div>
+                    <div class="contributor-role">Digital Archivist</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Assamese Literature Archive</h3>
+                    <p>Preserving and promoting the rich literary heritage of Assam through digital archiving and community engagement.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">F</a>
+                        <a href="#" class="social-icon">T</a>
+                        <a href="#" class="social-icon">I</a>
+                        <a href="#" class="social-icon">Y</a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Collections</a></li>
+                        <li><a href="#">Contributors</a></li>
+                        <li><a href="#">Submit Content</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Collections</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Folk Songs</a></li>
+                        <li><a href="#">Classical Poetry</a></li>
+                        <li><a href="#">Modern Literature</a></li>
+                        <li><a href="#">Bihu Songs</a></li>
+                        <li><a href="#">Traditional Stories</a></li>
+                        <li><a href="#">Historical Texts</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li>Email: info@assameseliterature.org</li>
+                        <li>Phone: +91 361 2345678</li>
+                        <li>Address: Cultural Heritage Building, Guwahati, Assam, India</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Assamese Literature Archive. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

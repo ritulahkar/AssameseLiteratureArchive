@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assamese Literature Archive</title>
+    <style>
+        :root {
+            --primary-color: #5e35b1;
+            --secondary-color: #e57373;
+            --text-color: #333;
+            --background-color: #f5f5f5;
+            --accent-color: #ff9800;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .language-switch {
+            display: flex;
+            align-items: center;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin: 0 10px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        .hero-section {
+            height: 400px;
+            background-image: url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-description {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .search-section {
+            padding: 40px 0;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-box {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 30px 0 0 30px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-button {
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .search-button:hover {
+            background-color: #4527a0;
+        }
+        
+        .featured-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+        
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .author-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .author-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .author-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .author-info {
+            padding: 20px;
+        }
+        
+        .author-name {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .author-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .view-works {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .view-works:hover {
+            background-color: #f57c00;
+        }
+        
+        .categories-section {
+            padding: 60px 0;
+            background-color: white;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-card {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .category-name {
+            font-size: 18px;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-description {
+                font-size: 16px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* Assamese Font */
+        .assamese-text {
+            font-family: 'Noto Sans', 'Noto Sans Assamese', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- English version is shown by default -->
+        <div id="english-version">
+            <header>
+                <div class="container header-content">
+                    <div class="logo">Assamese Literature Archive</div>
+                    <div class="language-switch">
+                        <span>English</span>
+                        <label class="switch">
+                            <input type="checkbox" id="language-toggle">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="assamese-text">অসমীয়া</span>
+                    </div>
+                </div>
+            </header>
+            
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">Discover Assamese Literary Heritage</h1>
+                    <p class="hero-description">Explore the rich literary tradition of Assam through our comprehensive archive of works from renowned authors and poets.</p>
+                </div>
+            </section>
+            
+            <section class="search-section">
+                <div class="container">
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="Search authors, works, or themes...">
+                        <button class="search-button">Search</button>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="featured-section">
+                <div class="container">
+                    <h2 class="section-title">Notable Authors</h2>
+                    <div class="authors-grid">
+                        <!-- Author 1 -->
+                        <div class="author-card" onclick="location.href='author-lakshminath-bezbaruah.html'">
+                            <img src="/api/placeholder/300/200" alt="Lakshminath Bezbaruah" class="author-image">
+                            <div class="author-info">
+                                <h3 class="author-name">Lakshminath Bezbaruah</h3>
+                                <p class="author-desc">Pioneer of modern Assamese literature and a leading figure of the Jonaki era.</p>
+                                <a href="author-lakshminath-bezbaruah.html" class="view-works">View Works</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Author 2 -->
+                        <div class="author-card" onclick="location.href='author-jyoti-prasad-agarwala.html'">
+                            <img src="/api/placeholder/300/200" alt="Jyoti Prasad Agarwala" class="author-image">
+                            <div class="author-info">
+                                <h3 class="author-name">Jyoti Prasad Agarwala</h3>
+                                <p class="author-desc">Revolutionary poet, playwright, and a pioneer of Assamese cinema.</p>
+                                <a href="author-jyoti-prasad-agarwala.html" class="view-works">View Works</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Author 3 -->
+                        <div class="author-card" onclick="location.href='author-homen-borgohain.html'">
+                            <img src="/api/placeholder/300/200" alt="Homen Borgohain" class="author-image">
+                            <div class="author-info">
+                                <h3 class="author-name">Homen Borgohain</h3>
+                                <p class="author-desc">Renowned novelist, literary critic, and recipient of the Sahitya Akademi Award.</p>
+                                <a href="author-homen-borgohain.html" class="view-works">View Works</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Author 4 -->
+                        <div class="author-card" onclick="location.href='author-indira-goswami.html'">
+                            <img src="/api/placeholder/300/200" alt="Indira Goswami" class="author-image">
+                            <div class="author-info">
+                                <h3 class="author-name">Indira Goswami</h3>
+                                <p class="author-desc">Acclaimed novelist, poet, and Jnanpith Award winner known by her pen name Mamoni Raisom Goswami.</p>
+                                <a href="author-indira-goswami.html" class="view-works">View Works</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="categories-section">
+                <div class="container">
+                    <h2 class="section-title">Literary Categories</h2>
+                    <div class="categories-grid">
+                        <div class="category-card">
+                            <div class="category-icon">📚</div>
+                            <div class="category-name">Novels</div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-icon">📜</div>
+                            <div class="category-name">Poetry</div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-icon">🎭</div>
+                            <div class="category-name">Drama</div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-icon">📝</div>
+                            <div class="category-name">Essays</div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-icon">🎵</div>
+                            <div class="category-name">Folk Songs</div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-icon">📖</div>
+                            <div class="

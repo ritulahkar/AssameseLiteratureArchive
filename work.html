@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="as">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কৰ্মৰ বিৱৰণ - অসমীয়া সাহিত্য সংগ্ৰহালয়</title>
+    <style>
+        :root {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --accent-color: #D7CCC8;
+            --text-color: #3E2723;
+            --light-text: #f5f5f5;
+            --highlight: #FF9800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FBE9E7;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            text-align: center;
+            padding: 2rem 0;
+            background-image: linear-gradient(rgba(93, 64, 55, 0.8), rgba(93, 64, 55, 0.9)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 5px solid var(--highlight);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight);
+        }
+
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            margin: 2rem 0;
+            padding: 0.8rem 1.2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb li {
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin: 0 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+            color: var(--secondary-color);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .work-hero {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .work-hero-image {
+            height: 300px;
+            background-image: url('/api/placeholder/1200/300');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .work-hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+        }
+
+        .work-title {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-metadata {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .work-metadata-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .work-metadata-item i {
+            margin-right: 0.5rem;
+            color: var(--highlight);
+        }
+
+        .work-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .work-tag {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .work-details {
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background-color: var(--highlight);
+        }
+
+        .work-intro {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .content-tabs {
+            margin-top: 2rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .text-content {
+            font-size: 1.1rem;
+            line-height: 2;
+            white-space: pre-line;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .audio-player audio {
+            width: 100%;
+        }
+
+        .explanation-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .additional-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            background-color: var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--highlight);
+            padding-bottom: 0.5rem;
+        }
+
+        .related-works {
+            margin-top: 3rem;
+        }
+
+        .related-works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .related-work-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .related-work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .related-work-image {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .related-work-info {
+            padding: 1.2rem;
+        }
+
+        .related-work-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary-color);
+        }
+
+        .related-work-type {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .loader {
+            display: block;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loader::after {
+            content: "";
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--accent-color);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .no-content {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 1rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--highlight);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--highlight);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .work-title {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .work-hero-image {
+                height: 200px;
+            }
+
+            .work-hero-overlay {
+                padding: 1.5rem;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .tab-content {
+                padding: 1.5rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>অসমীয়া সাহিত্য সংগ্ৰহালয়</h1>
+            <p>অসমৰ সমৃদ্ধ সাহিত্যিক ঐতিহ্য সংৰক্ষণ আৰু উদযাপন</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <div class="logo"><a href="index.html">অসমীয়া সাহিত্য সংগ্ৰহালয়</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">মূল পৃষ্ঠা</a></li>
+                <li><a href="#">সংগ্ৰহ</a></li>
+                <li><a href="#">আমাৰ বিষয়ে</a></li>
+                <li><a href="#">যোগাযোগ</a></li>
+            </ul>
+        </nav>
+
+        <ul class="breadcrumb" id="breadcrumb">
+            <li><a href="index.html">মূল পৃষ্ঠা</a></li>
+            <li><a href="artist.html" id="artist-breadcrumb">কলাকাৰ</a></li>
+            <li id="work-breadcrumb">কৰ্ম</li>
+        </ul>
+
+        <div id="work-container">
+            <!-- Work details will be loaded here -->
+            <div class="loader" id="work-loader"></div>
+        </div>
+
+        <div id="related-works-container" class="related-works">
+            <h2 class="section-title">সম্পৰ্কিত কৰ্মসমূহ</h2>
+            <div id="related-works-list" class="related-works-grid">
+                <!-- Related works will be loaded here -->
+                <div class="loader" id="related-loader"></div>
+            </div>
+        </div>
+
+        <a href="#" class="back-to-top" id="back-to-top">↑</a>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>আমাৰ বিষয়ে</h3>
+                    <p>অসমীয়া সাহিত্য সংগ্ৰহালয় অসমৰ সমৃদ্ধ সাহিত্যিক ঐতিহ্য সংগ্ৰহ, সংৰক্ষণ আৰু প্ৰচাৰ কৰাৰ বাবে
+                        উৎসৰ্গিত। আমাৰ লক্ষ্য হৈছে অসমীয়া সাহিত্য বিশ্বজুৰি পাঠকৰ বাবে সুলভ কৰা।</p>
+                </div>
+                <div class="footer-section">
+                    <h3>দ্ৰুত লিংক</h3>
+                    <ul>
+                        <li><a href="index.html">মূল পৃষ্ঠা</a></li>
+                        <li><a href="#">আমাৰ বিষয়ে</a></li>
+                        <li><a href="#">সংগ্ৰহ</a></li>
+                        <li><a href="#">যোগাযোগ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>আমাৰ সৈতে যোগাযোগ কৰক</h3>
+                    <p>ইমেইল: info@assamliterature.org</p>
+                    <p>ফোন: +91-123-456-7890</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© ২০২৫ অসমীয়া সাহিত্য সংগ্ৰহালয়। সৰ্বস্বত্ব সংৰক্ষিত।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Helper function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Function to fetch work data based on ID
+        // Function to fetch work data based on ID
+        function fetchWorkData(wid, aid) {
+            return new Promise((resolve) => {
+                // Show loader
+                const workLoader = document.getElementById('work-loader');
+                if (workLoader) {
+                    workLoader.style.display = 'block';
+                }
+
+                // Parse ID to integer
+                const workId = parseInt(wid) || 1;
+
+                // Fetch the list of works from the JSON file
+                // This file would contain all work metadata
+                fetch(`/data/`+aid+`_a/works.json`)
+                    .then(response => response.json())
+                    .then(worksDatabase => {
+                        const workData = worksDatabase[workId-1];
+
+                        if (workData) {
+                            // Update breadcrumb
+                            const artistBreadcrumb = document.getElementById('artist-breadcrumb');
+                            if (artistBreadcrumb) {
+                                artistBreadcrumb.textContent = workData.artistName;
+                                artistBreadcrumb.href = `artist.html?id=${workData.artistId}`;
+                            }
+
+                            const workBreadcrumb = document.getElementById('work-breadcrumb');
+                            if (workBreadcrumb) {
+                                workBreadcrumb.textContent = workData.title;
+                            }
+
+                            // Prepare the work container HTML
+                            let workHTML = `
+                        <div class="work-hero">
+                            <div class="work-hero-image" style="background-image: url('${workData.image}')">
+                                <div class="work-hero-overlay">
+                                    <h1 class="work-title">${workData.title}</h1>
+                                    <div class="work-metadata">
+                                        <div class="work-metadata-item">
+                                            <i>👤</i> ${workData.artistName}
+                                        </div>
+                                        <div class="work-metadata-item">
+                                            <i>📅</i> ${workData.year}
+                                        </div>
+                                        <div class="work-metadata-item">
+                                            <i>📚</i> ${workData.type}
+                                        </div>
+                                        <div class="work-metadata-item">
+                                            <i>🏢</i> ${workData.publishedBy}
+                                        </div>
+                                    </div>
+                                    <div class="work-tags">
+                                        ${workData.tags.map(tag => `<span class="work-tag">${tag}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="work-details">
+                                <h2 class="section-title">পৰিচয়</h2>
+                                <div class="work-intro">
+                                    ${workData.introduction}
+                                </div>
+                                
+                                <div class="content-tabs">
+                                    <div class="tab-buttons">
+                                        ${workData.hasText ? '<button class="tab-button active" id="text-tab">পাঠ</button>' : ''}
+                                        ${workData.hasAudio ? '<button class="tab-button" id="audio-tab">শ্ৰৱণ</button>' : ''}
+                                        ${workData.hasExplanation ? '<button class="tab-button" id="explanation-tab">ব্যাখ্যা</button>' : ''}
+                                        <button class="tab-button" id="details-tab">অধিক তথ্য</button>
+                                    </div>`;
+
+                            // Create a container for tab content that will be dynamically loaded
+                            workHTML += `<div id="dynamic-tab-content">`;
+
+                            // Load initial content for the first active tab
+                            if (workData.hasText) {
+                                workHTML += `<div class="tab-content active" id="text-content">
+                            <div class="text-content">
+                                <p>পাঠ লোড হৈ আছে...</p>
+                            </div>
+                        </div>`;
+                            } else if (workData.hasAudio) {
+                                workHTML += `<div class="tab-content active" id="audio-content">
+                            <div class="audio-player">
+                                <h3>শ্ৰৱণ কৰক</h3>
+                                <p>অডিঅ' লোড হৈ আছে...</p>
+                            </div>
+                        </div>`;
+                            } else if (workData.hasExplanation) {
+                                workHTML += `<div class="tab-content active" id="explanation-content">
+                            <div class="explanation-content">
+                                <p>ব্যাখ্যা লোড হৈ আছে...</p>
+                            </div>
+                        </div>`;
+                            } else {
+                                workHTML += `<div class="tab-content active" id="details-content">
+                            <h3>অধিক তথ্য</h3>
+                            <p>তথ্য লোড হৈ আছে...</p>
+                        </div>`;
+                            }
+
+                            workHTML += `</div>
+                                </div>
+                            </div>
+                        </div>`;
+
+                            // Update the work container with the HTML
+                            const workContainer = document.getElementById('work-container');
+                            if (workContainer) {
+                                workContainer.innerHTML = workHTML;
+                            }
+
+                            // Initialize tabs with dynamic content loading
+                            initTabsWithDynamicLoading(workData);
+
+                        } else {
+                            // Work not found
+                            const workContainer = document.getElementById('work-container');
+                            if (workContainer) {
+                                workContainer.innerHTML = `
+                            <div class="no-content">
+                                <h2>কৰ্ম পোৱা নগ'ল</h2>
+                                <p>আপুনি বিচৰা কৰ্মটো আমাৰ ডাটাবেইচত পোৱা নগ'ল।</p>
+                                <p><a href="index.html">মূল পৃষ্ঠালৈ উভতি যাওক</a></p>
+                            </div>
+                        `;
+                            }
+                        }
+
+                        // Hide loader
+                        if (workLoader) {
+                            workLoader.style.display = 'none';
+                        }
+
+                        resolve(workData);
+                    })
+                    .catch(error => {
+                        console.error("Error loading works data:", error);
+                        const workContainer = document.getElementById('work-container');
+                        if (workContainer) {
+                            workContainer.innerHTML = `
+                        <div class="no-content">
+                            <h2>তথ্য লোড কৰাত সমস্যা হৈছে</h2>
+                            <p>দুঃখিত, কৰ্মৰ তথ্য লোড কৰাত সমস্যা হৈছে। অনুগ্ৰহ কৰি পিছত চেষ্টা কৰক।</p>
+                            <p><a href="index.html">মূল পৃষ্ঠালৈ উভতি যাওক</a></p>
+                        </div>
+                    `;
+                        }
+                        if (workLoader) {
+                            workLoader.style.display = 'none';
+                        }
+                        resolve(null);
+                    });
+            });
+        }
+
+        // Function to initialize tabs with dynamic content loading
+        function initTabsWithDynamicLoading(workData) {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const dynamicTabContent = document.getElementById('dynamic-tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    button.classList.add('active');
+
+                    // Get tab type from button ID
+                    const tabType = button.id.replace('-tab', '');
+
+                    // Load content based on tab type
+                    loadTabContent(tabType, workData.id, workData.artistId, dynamicTabContent);
+                });
+            });
+
+            // Load initial content for the first active tab
+            const activeTab = document.querySelector('.tab-button.active');
+            if (activeTab) {
+                const initialTabType = activeTab.id.replace('-tab', '');
+                loadTabContent(initialTabType, workData.id, workData.artistId, dynamicTabContent);
+            }
+        }
+
+        // Function to load tab content dynamically
+        function loadTabContent(tabType, workId, artistId, contentContainer) {
+            // Show loading state
+            contentContainer.innerHTML = `
+        <div class="tab-content active">
+            <div class="loading">
+                <p>তথ্য লোড হৈ আছে...</p>
+            </div>
+        </div>
+    `;
+
+            // Prepare the file path based on tab type and work ID
+            let filePath;
+            let contentType;
+
+            switch (tabType) {
+                case 'text':
+                    filePath = `/data/${artistId}_a/workstext/w_${workId}.txt`;
+                    contentType = 'text';
+                    break;
+                case 'audio':
+                    filePath = `/data/${artistId}_a/worksaudio/a_${workId}.mp3`;
+                    contentType = 'audio';
+                    break;
+                case 'explanation':
+                    filePath = `/data/${artistId}_a/worksexplaination/e_${workId}.txt`;
+                    contentType = 'text';
+                    break;
+                case 'details':
+                    filePath = `/data/${artistId}_a/worksextrainfo/i_${workId}.txt`;
+                    contentType = 'text';
+                    break;
+                default:
+                    contentContainer.innerHTML = `
+                <div class="tab-content active">
+                    <div class="error">
+                        <p>অজ্ঞাত টেব প্ৰকাৰ</p>
+                    </div>
+                </div>
+            `;
+                    return;
+            }
+
+            // Load content based on type
+            if (contentType === 'text') {
+                fetch(filePath)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Content not found');
+                        }
+                        return response.text();
+                    })
+                    .then(textContent => {
+                        let formattedContent = textContent.replace(/\n/g, '<br>');
+
+                        contentContainer.innerHTML = `
+                    <div class="tab-content active" id="${tabType}-content">
+                        <div class="${tabType}-content">
+                            ${formattedContent}
+                        </div>
+                    </div>
+                `;
+                    })
+                    .catch(error => {
+                        console.error(`Error loading ${tabType} content:`, error);
+                        contentContainer.innerHTML = `
+                    <div class="tab-content active" id="${tabType}-content">
+                        <div class="no-content">
+                            <p>এই কৰ্মৰ বাবে ${getTabTypeName(tabType)} উপলব্ধ নহয়।</p>
+                        </div>
+                    </div>
+                `;
+                    });
+            } else if (contentType === 'audio') {
+                // For audio, we check if the file exists differently
+                const audio = new Audio(filePath);
+                audio.addEventListener('canplaythrough', () => {
+                    contentContainer.innerHTML = `
+                <div class="tab-content active" id="audio-content">
+                    <div class="audio-player">
+                        <h3>শ্ৰৱণ কৰক</h3>
+                        <audio controls>
+                            <source src="${filePath}" type="audio/mpeg">
+                            আপোনাৰ ব্ৰাউজাৰে অডিঅ' সমৰ্থন নকৰে।
+                        </audio>
+                    </div>
+                </div>
+            `;
+                });
+
+                audio.addEventListener('error', () => {
+                    contentContainer.innerHTML = `
+                <div class="tab-content active" id="audio-content">
+                    <div class="no-content">
+                        <p>এই কৰ্মৰ বাবে অডিঅ' উপলব্ধ নহয়।</p>
+                    </div>
+                </div>
+            `;
+                });
+
+                // Start loading the audio
+                audio.load();
+            }
+        }
+
+        // Helper function to get tab type name in Assamese
+        function getTabTypeName(tabType) {
+            switch (tabType) {
+                case 'text':
+                    return 'পাঠ';
+                case 'audio':
+                    return 'শ্ৰৱণ';
+                case 'explanation':
+                    return 'ব্যাখ্যা';
+                case 'details':
+                    return 'অধিক তথ্য';
+                default:
+                    return 'তথ্য';
+            }
+        }
+
+        // Function to fetch related works
+        // Function to fetch related works
+        function fetchRelatedWorks(workData, aid) {
+            return new Promise((resolve) => {
+                // Show loader
+                const relatedLoader = document.getElementById('related-loader');
+                if (relatedLoader) {
+                    relatedLoader.style.display = 'block';
+                }
+
+                // Fetch the list of works from the works.json file
+                fetch(`/data/`+aid+`_a/works.json`)
+                    .then(response => response.json())
+                    .then(worksDatabase => {
+                        const relatedWorksContainer = document.getElementById('related-works-list');
+
+                        if (relatedWorksContainer && workData) {
+                            // Generate HTML for related works
+                            let relatedWorksHTML = '';
+
+                            // Filter works to find related ones (same artist or matching tags)
+                            // In a production implementation, you might want to implement a more sophisticated
+                            // algorithm to find related works based on tags, type, artist, etc.
+                            const relatedWorks = Object.values(worksDatabase).filter(work => {
+                                // Exclude the current work
+                                if (work.id === workData.id) return false;
+
+                                // Include works by the same artist
+                                if (work.artistId === workData.artistId) return true;
+
+                                // Include works with at least one matching tag
+                                const hasMatchingTag = workData.tags.some(tag => work.tags.includes(tag));
+                                if (hasMatchingTag) return true;
+
+                                return false;
+                            });
+
+                            // Limit to 5 related works
+                            const limitedRelatedWorks = relatedWorks.slice(0, 5);
+
+                            // Generate HTML
+                            limitedRelatedWorks.forEach(work => {
+                                relatedWorksHTML += `
+                            <div class="related-work-card" onclick="window.location.href='work.html?wid=${work.id}&aid=${work.artistId}'">
+                                <div class="related-work-image" style="background-image: url('${work.image}')"></div>
+                                <div class="related-work-info">
+                                    <h3 class="related-work-title">${work.title}</h3>
+                                    <span class="related-work-type">${work.type}</span>
+                                </div>
+                                </div>
+                        `;
+                            });
+
+                            // If no related works found
+                            if (limitedRelatedWorks.length === 0) {
+                                relatedWorksHTML = `
+                            <div class="no-content">
+                                <p>কোনো সম্পৰ্কিত কৰ্ম পোৱা নগ'ল।</p>
+                            </div>
+                        `;
+                            }
+
+                            relatedWorksContainer.innerHTML = relatedWorksHTML;
+                        }
+
+                        // Hide loader
+                        if (relatedLoader) {
+                            relatedLoader.style.display = 'none';
+                        }
+
+                        resolve();
+                    })
+                    .catch(error => {
+                        console.error("Error loading related works:", error);
+                        const relatedWorksContainer = document.getElementById('related-works-list');
+
+                        if (relatedWorksContainer) {
+                            relatedWorksContainer.innerHTML = `
+                        <div class="no-content">
+                            <p>সম্পৰ্কিত কৰ্ম লোড কৰাত সমস্যা হৈছে।</p>
+                        </div>
+                    `;
+                        }
+
+                        if (relatedLoader) {
+                            relatedLoader.style.display = 'none';
+                        }
+
+                        resolve();
+                    });
+            });
+        }
+
+        // Function to initialize back to top button
+        function initBackToTop() {
+            const backToTopButton = document.getElementById('back-to-top');
+            if (backToTopButton) {
+                // Show button when user scrolls down
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        backToTopButton.classList.add('visible');
+                    } else {
+                        backToTopButton.classList.remove('visible');
+                    }
+                });
+
+                // Scroll to top when button is clicked
+                backToTopButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get work ID from URL
+            const workId = getUrlParameter('wid');
+            const artistId = getUrlParameter('aid');
+
+            // Fetch work data
+            fetchWorkData(workId, artistId).then(workData => {
+                // Fetch related works
+                if (workData) {
+                    fetchRelatedWorks(workData, artistId);
+                }
+            });
+
+            // Initialize back to top button
+            initBackToTop();
+        });
+    </script>
+</body>
+
+</html>
